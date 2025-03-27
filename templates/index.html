@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Resume Analyzer</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Google Fonts for Professional UI -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Custom CSS for Professional Look -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f6f9;
+        }
+        .container {
+            max-width: 800px;
+            margin-top: 80px;
+        }
+        .card {
+            border-radius: 18px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #343a40;
+            font-weight: 700;
+        }
+        .btn-upload {
+            background: linear-gradient(to right, #007bff, #00c6ff);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-upload:hover {
+            background: linear-gradient(to right, #0056b3, #0095ff);
+        }
+        .form-control {
+            border-radius: 12px;
+        }
+        .drag-drop-box {
+            border: 2px dashed #007bff;
+            border-radius: 14px;
+            padding: 50px;
+            text-align: center;
+            background-color: #eef5ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .drag-drop-box:hover {
+            background-color: #e0f0ff;
+        }
+        .icon-upload {
+            font-size: 50px;
+            color: #007bff;
+        }
+        #file-info {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #555;
+        }
+        .progress-container {
+            display: none;
+            margin-top: 20px;
+        }
+        .progress-bar {
+            height: 8px;
+            background: linear-gradient(to right, #28a745, #00c851);
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #6c757d;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="card p-5 shadow-lg">
+            <h2 class="text-center mb-4">🚀 Smart Resume Analyzer</h2>
+            <p class="text-muted text-center">Get instant insights, skill recommendations, and career suggestions.</p>
+
+            <!-- Upload Form -->
+            <form action="/upload" method="post" enctype="multipart/form-data" id="uploadForm">
+                <div class="form-group">
+                    <!-- Drag and Drop Section -->
+                    <div class="drag-drop-box" id="dragDropBox" onclick="document.getElementById('resume').click()">
+                        <i class="icon-upload fas fa-cloud-upload-alt"></i>
+                        <p class="mt-3">Drag & drop your resume here or <strong>click to upload</strong></p>
+                    </div>
+                    <input type="file" id="resume" name="resume" class="form-control-file d-none" accept=".pdf, .doc, .docx" required>
+                    <div id="file-info" class="text-center"></div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+
+                <!-- Job Description Input -->
+                <div class="form-group mt-4">
+                    <label for="job_desc"><strong>💼 Paste the Job Description (Optional)</strong></label>
+                    <textarea id="job_desc" name="job_desc" class="form-control" rows="4" placeholder="Enter the job description for ATS matching..."></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-upload">🔍 Analyze Resume</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="footer mt-5">
+            <p>© 2025 Smart Resume Analyzer. All rights reserved.</p>
+        </div>
+    </div>
+
+    <!-- Font Awesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <!-- JavaScript for Drag & Drop and Progress Bar -->
+    <script>
+        const dragDropBox = document.getElementById('dragDropBox');
+        const resumeInput = document.getElementById('resume');
+        const fileInfo = document.getElementById('file-info');
+        const progressBar = document.getElementById('progressBar');
+        const progressContainer = document.querySelector('.progress-container');
+
+        resumeInput.addEventListener('change', function () {
+            if (this.files.length > 0) {
+                fileInfo.innerHTML = `<strong>File Selected: </strong> ${this.files[0].name}`;
+                showProgressBar();
+            }
+        });
+
+        function showProgressBar() {
+            progressContainer.style.display = 'block';
+            let width = 0;
+            const interval = setInterval(function () {
+                if (width >= 100) {
+                    clearInterval(interval);
+                } else {
+                    width += 10;
+                    progressBar.style.width = width + '%';
+                }
+            }, 300);
+        }
+
+        dragDropBox.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dragDropBox.style.backgroundColor = '#e0f0ff';
+        });
+
+        dragDropBox.addEventListener('dragleave', () => {
+            dragDropBox.style.backgroundColor = '#eef5ff';
+        });
+
+        dragDropBox.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dragDropBox.style.backgroundColor = '#eef5ff';
+            resumeInput.files = e.dataTransfer.files;
+            fileInfo.innerHTML = `<strong>File Dropped: </strong> ${e.dataTransfer.files[0].name}`;
+            showProgressBar();
+        });
+    </script>
+
+</body>
+</html>

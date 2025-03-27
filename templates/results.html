@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analysis Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body class="bg-light">
+
+    <!-- Analysis Results Section -->
+    <div class="container mt-5">
+        <div class="card shadow p-4">
+            <h3 class="text-center text-info">📊 Analysis Results</h3>
+
+            <!-- Basic Information -->
+            <h5 class="mt-4">📝 Basic Information</h5>
+            <p><strong>Name: ↣</strong> {{ basic_info['Name'] }}</p>
+            <p><strong>Email: ↣</strong> {{ basic_info['Email'] }}</p>
+            <p><strong>Phone: ↣</strong> {{ basic_info['Phone'] }}</p>
+
+            <!-- Available Skills -->
+            <h5 class="mt-4">💡 Available Skills: ↣</h5>
+            <ul class="list-group">
+                {% for skill in found_skills %}
+                <li class="list-group-item">{{ skill }}</li>
+                {% endfor %}
+            </ul>
+
+            <!-- Recommended Skills -->
+            <h5 class="mt-4">🎯 Recommended Skills: ↣</h5>
+            <ul class="list-group">
+                {% for skill in recommended_skills %}
+                <li class="list-group-item">{{ skill }}</li>
+                {% endfor %}
+            </ul>
+
+            <!-- Tips and Ideas -->
+            <h5 class="mt-4">🧠 Tips and Ideas: ↣</h5>
+            <ul class="list-group">
+                {% for tip in tips %}
+                <li class="list-group-item">{{ tip }}</li>
+                {% endfor %}
+            </ul>
+
+            <!-- Career Recommendations -->
+            <h5 class="mt-4">💼 Career Recommendations: ↣</h5>
+            <ul class="list-group mt-2">
+                {% for rec in recommendations %}
+                <li class="list-group-item">
+                    {{ rec.career }} (Match Score: ↣ <strong>{{ rec.match_score }}%</strong>)
+                </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Experience and Project Quality Evaluation -->
+            <h5 class="mt-4 text-success">🏆 Experience Evaluation: ↣</h5>
+            <p>{{ experience_eval }}</p>
+
+            <h5 class="mt-4 text-success">🚀 Project Quality Evaluation: ↣</h5>
+            <p>{{ project_eval }}</p>
+
+            <!-- ATS Score -->
+            <div class="alert alert-info mt-3">
+                <strong>ATS Score: ↣</strong> {{ ats_score }}%
+            </div>
+
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-primary">Go Back</a>
+        </div>
+    </div>
+</body>
+</html>
