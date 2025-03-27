@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analysis Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h2 class="text-center text-success">Analysis Results</h2>
+
+        <!-- ATS Score -->
+        <div class="alert alert-info mt-3">
+            <strong>ATS Score:</strong> {{ ats_score }}%
+        </div>
+
+        <!-- Career Recommendations -->
+        <h4 class="mt-4">Career Recommendations:</h4>
+        <ul class="list-group mt-2">
+            {% for rec in recommendations %}
+            <li class="list-group-item">
+                {{ rec.career }} (Match Score: <strong>{{ rec.match_score }}%</strong>)
+            </li>
+            {% endfor %}
+        </ul>
+
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-primary">Go Back</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
